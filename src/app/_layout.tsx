@@ -1,16 +1,32 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import { Slot } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import { Stack } from "expo-router";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider
-      value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-    >
-      <Slot />
-    </ThemeProvider>
+    <Stack>
+      <Stack.Screen
+        name="index"
+        options={{
+          title: "GameTrack",
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="add-game"
+        options={{
+          title: "Add Game",
+          headerShown: true,
+        }}
+      />
+
+      <Stack.Screen
+        name="collection"
+        options={{
+          title: "My Collection",
+          headerShown: true,
+        }}
+      />
+    </Stack>
   );
 }
 
