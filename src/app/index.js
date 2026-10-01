@@ -15,7 +15,7 @@ import {
   addGame,
   deleteGame,
   getGames,
-} from "./gameStore";
+} from "../gameStore";
 
 export default class App extends React.Component {
   constructor(props) {

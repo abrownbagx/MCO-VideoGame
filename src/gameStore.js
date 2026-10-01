@@ -21,7 +21,7 @@ export async function getGames(): Promise<Game[]> {
 
     return JSON.parse(data);
   } catch (error) {
-    console.log("Error loading games:", error);
+    console.error("Error loading games:", error);
     return [];
   }
 }
@@ -32,16 +32,14 @@ export async function loadGames(): Promise<Game[]> {
 }
 
 // Save games
-export async function saveGames(
-  games: Game[]
-): Promise<void> {
+export async function saveGames(games: Game[]): Promise<void> {
   try {
     await AsyncStorage.setItem(
       STORAGE_KEY,
       JSON.stringify(games)
     );
   } catch (error) {
-    console.log("Error saving games:", error);
+    console.error("Error saving games:", error);
   }
 }
 
@@ -59,17 +57,15 @@ export async function addGame(
     completed: false,
   };
 
-  games.push(newGame);
+  const updatedGames = [...games, newGame];
 
-  await saveGames(games);
+  await saveGames(updatedGames);
 
   return newGame;
 }
 
 // Delete a game
-export async function deleteGame(
-  id: string
-): Promise<void> {
+export async function deleteGame(id: string): Promise<void> {
   const games = await getGames();
 
   const updatedGames = games.filter(
@@ -79,10 +75,8 @@ export async function deleteGame(
   await saveGames(updatedGames);
 }
 
-// Complete / uncomplete a game
-export async function toggleGame(
-  id: string
-): Promise<void> {
+// Toggle game completed status
+export async function toggleGame(id: string): Promise<void> {
   const games = await getGames();
 
   const updatedGames = games.map((game) => {
